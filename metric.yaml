@@ -1,0 +1,20 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: prometheus
+  labels:
+    k8s-app: my-service-monitor
+spec:
+  selector:
+    matchLabels:
+      app: nginxsvc
+      app: civoappsvc
+  namespaceSelector:
+    matchNames:
+      - nginx
+      - civoapp-service
+  endpoints:
+    - interval: 10s
+      path: /metrics/cadvisor
+      port: http
+      scheme: http
